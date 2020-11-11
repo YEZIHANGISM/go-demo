@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"gin_demo/home"
-	"gin_demo/jwt"
+	"gin_demo/app/home"
+	"gin_demo/app/jwt"
 	"gin_demo/routers"
 )
 

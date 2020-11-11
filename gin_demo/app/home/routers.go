@@ -1,7 +1,7 @@
 package home
 
 import (
-	"gin_demo/jwt"
+	"gin_demo/app/jwt"
 
 	"github.com/gin-gonic/gin"
 )
