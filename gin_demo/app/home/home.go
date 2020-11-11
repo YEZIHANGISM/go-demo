@@ -9,6 +9,7 @@ import (
 // HelloService Controller
 func HelloService(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
+		"code":    2000,
 		"message": "hello world!",
 	})
 }
