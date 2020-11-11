@@ -23,10 +23,12 @@ func main() {
 		test.Routers,
 	)
 	r := routers.Init()
+	// 正常执行
 	// if err := r.Run(); err != nil {
 	// 	fmt.Println("starting server failed, err: ", err)
 	// }
 
+	// 安全关机
 	srv := &http.Server{
 		Addr:    ":8080",
 		Handler: r,
@@ -47,4 +49,10 @@ func main() {
 	}
 	log.Println("server exiting")
 
+	// 热重启
+	// windows环境没有syscall.SIGUSR1和syscall.SIGUSR2两个信号，会导致报错
+	// if err := endless.ListenAndServe(":8080", r); err != nil {
+	// 	log.Fatalf("listen: %s\n", err)
+	// }
+	// log.Println("server exiting")
 }
