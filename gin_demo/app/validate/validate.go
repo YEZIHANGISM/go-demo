@@ -25,7 +25,7 @@ type SignUpParam struct {
 	Password   string `json:"password" binding:"required"`
 	REPassword string `json:"re_password" binding:"required,eqfield=Password"`
 	Age        string `json:"age" binding:"required,gte=1,lte=130"`
-	// Date       string `json:"date" binding:"required,datetime=2006-01-02,checkDate"`
+	Date       string `json:"date" binding:"required,datetime=2006-01-02,checkDate"`
 }
 
 var trans ut.Translator
@@ -41,14 +41,31 @@ func customFieldValidation(fl validator.FieldLevel) bool {
 	return true
 }
 
+func dateFieldTranslator(tag string, msg string) validator.RegisterTranslationsFunc {
+	return func(trans ut.Translator) error {
+		if err := trans.Add(tag, msg, false); err != nil {
+			return err
+		}
+		return nil
+	}
+}
+
+func translate(trans ut.Translator, fe validator.FieldError) string {
+	msg, err := trans.T(fe.Tag(), fe.Field())
+	if err != nil {
+		panic(fe.(error).Error())
+	}
+	return msg
+}
+
 // InitValidator 自定义校验器
 func InitValidator() error {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 
 		// 注册自定义的字段方法校验器
-		// if err := v.RegisterValidation("checkDate", customFieldValidation); err != nil {
-		// 	return err
-		// }
+		if err := v.RegisterValidation("checkDate", customFieldValidation); err != nil {
+			return err
+		}
 
 		// 错误信息翻译校验器
 		zhT := zh.New()
@@ -63,9 +80,14 @@ func InitValidator() error {
 		}
 		zhTranslations.RegisterDefaultTranslations(v, trans)
 
-		// if err := v.RegisterTranslation(); err != nil {
-		// 	return err
-		// }
+		if err := v.RegisterTranslation(
+			"checkDate",
+			trans,
+			dateFieldTranslator("checkDate", "{0}必须晚于当前日期"),
+			translate,
+		); err != nil {
+			return err
+		}
 		return nil
 	}
 	return nil
