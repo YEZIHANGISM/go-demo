@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"gin_demo/app/home"
 	"gin_demo/app/jwt"
 	"gin_demo/app/test"
@@ -16,6 +17,13 @@ import (
 )
 
 func main() {
+
+	// 加载校验器
+	if err := validate.InitValidator(); err != nil {
+		fmt.Println("init validator failed, err: ", err)
+		return
+	}
+
 	routers.Include(
 		home.Routers,
 		jwt.Routers,

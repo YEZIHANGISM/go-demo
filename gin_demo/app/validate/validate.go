@@ -11,7 +11,7 @@ import (
 	"github.com/go-playground/locales/zh"
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
-	enTranslations "github.com/go-playground/validator/v10/translations/en"
+	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
 )
 
 // SignUpParam validator
@@ -25,7 +25,7 @@ type SignUpParam struct {
 	Password   string `json:"password" binding:"required"`
 	REPassword string `json:"re_password" binding:"required,eqfield=Password"`
 	Age        string `json:"age" binding:"required,gte=1,lte=130"`
-	Date       string `json:"date" binding:"required,datetime=2006-01-02,checkDate"`
+	// Date       string `json:"date" binding:"required,datetime=2006-01-02,checkDate"`
 }
 
 var trans ut.Translator
@@ -45,6 +45,11 @@ func customFieldValidation(fl validator.FieldLevel) bool {
 func InitValidator() error {
 	if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
 
+		// 注册自定义的字段方法校验器
+		// if err := v.RegisterValidation("checkDate", customFieldValidation); err != nil {
+		// 	return err
+		// }
+
 		// 错误信息翻译校验器
 		zhT := zh.New()
 		enT := en.New()
@@ -52,15 +57,15 @@ func InitValidator() error {
 		// 第一个参数表示备用语言环境，后面的参数表示应该支持的语言环境
 		uni := ut.New(enT, zhT, enT)
 		var ok bool
-		trans, ok = uni.FindTranslator("zh")
+		trans, ok = uni.GetTranslator("zh")
 		if !ok {
 			return fmt.Errorf("uni.GetTranslator(zh) failed")
 		}
-		enTranslations.RegisterDefaultTranslations(v, trans)
-		// 注册自定义的字段校验器
-		if err := v.RegisterValidation("checkDate", customFieldValidation); err != nil {
-			return err
-		}
+		zhTranslations.RegisterDefaultTranslations(v, trans)
+
+		// if err := v.RegisterTranslation(); err != nil {
+		// 	return err
+		// }
 		return nil
 	}
 	return nil
@@ -68,13 +73,6 @@ func InitValidator() error {
 
 // SignUpService handler
 func SignUpService(c *gin.Context) {
-	if err := InitValidator(); err != nil {
-		c.JSON(http.StatusOK, gin.H{
-			"code": 2001,
-			"msg":  err.Error(),
-		})
-		return
-	}
 	var signs SignUpParam
 	if err := c.ShouldBind(&signs); err != nil {
 		errs, ok := err.(validator.ValidationErrors)
