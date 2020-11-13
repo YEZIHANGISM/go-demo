@@ -3,7 +3,6 @@ module gin_demo
 go 1.15
 
 require (
-	github.com/adeven/go-wrk v0.0.0-20200418124433-63e11dd31fef // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/locales v0.13.0
