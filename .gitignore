@@ -2,3 +2,4 @@
 *.sum
 tmp/*
 !.gitignore
+.idea
