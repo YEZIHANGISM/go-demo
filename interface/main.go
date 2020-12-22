@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"interface/base_demo"
 	"interface/empty_interface"
+	"interface/go_reflect"
 	"interface/methodset"
 	"interface/sorting"
 	"interface/type_assertion"
@@ -19,4 +20,6 @@ func main() {
 	sorting.Sorting()
 	fmt.Println("====================")
 	empty_interface.EmptyInterface()
+	fmt.Println("====================")
+	go_reflect.ReflectDemo()
 }
