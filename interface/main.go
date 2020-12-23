@@ -3,9 +3,11 @@ package main
 import (
 	"fmt"
 	"interface/base_demo"
+	"interface/ducktype"
 	"interface/empty_interface"
 	"interface/go_reflect"
 	"interface/methodset"
+	"interface/printf_interface"
 	"interface/sorting"
 	"interface/type_assertion"
 )
@@ -22,4 +24,7 @@ func main() {
 	empty_interface.EmptyInterface()
 	fmt.Println("====================")
 	go_reflect.ReflectDemo()
+	fmt.Println("====================")
+	printf_interface.Print()
+	fmt.Println("\n====================")
 }
