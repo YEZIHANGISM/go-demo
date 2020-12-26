@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"interface/base_demo"
-	"interface/ducktype"
 	"interface/empty_interface"
+	"interface/extract_interface"
 	"interface/go_reflect"
 	"interface/methodset"
 	"interface/printf_interface"
@@ -27,4 +27,5 @@ func main() {
 	fmt.Println("====================")
 	printf_interface.Print()
 	fmt.Println("\n====================")
+	extract_interface.ExtractInterface()
 }
