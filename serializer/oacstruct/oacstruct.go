@@ -17,10 +17,12 @@ type ExtraUser struct {
 	Email *struct{} `json:"email,omitempty"`
 }
 
+// OACStructSerializer 不修改原结构体的情况下忽略空值字段
+//
+// 使用匿名嵌套原结构体
+//
+// 指定需要忽略空值的字段为匿名结构体指针类型
 func OACStructSerializer() {
-	// 不修改原结构体的情况下忽略空值字段
-	// 使用匿名嵌套原结构体
-	// 指定需要忽略空值的字段为匿名结构体指针类型
 
 	u1 := User{
 		Name: "mauz",

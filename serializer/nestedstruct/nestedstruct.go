@@ -17,10 +17,10 @@ type anonyS struct {
 	Profile
 }
 
+// NestedStructSerializer 嵌套结构体序列化
+//
+// 匿名嵌套序列化后所有字段以一维平铺展示
 func NestedStructSerializer() {
-	// 嵌套结构体序列化
-	// 匿名嵌套序列化后所有字段以一维平铺展示
-
 	a1 := anonyS{
 		Name: "jhin",
 	}

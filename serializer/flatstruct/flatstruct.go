@@ -13,8 +13,8 @@ type Person struct {
 	Email  string  `json:"email,omitempty"` // 为空时忽略该字段
 }
 
+// FlatStructSerializer 扁平结构体序列化
 func FlatStructSerializer() {
-	// 扁平结构体序列化
 	p := Person{
 		Name: "ism",
 		Age:  13,
