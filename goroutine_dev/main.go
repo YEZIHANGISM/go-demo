@@ -1,7 +1,7 @@
 package main
 
 import (
-	"goroutine_dev/semaphore"
+	primefilterfactory "goroutine_dev/prime_filter_factory"
 )
 
 func main() {
@@ -10,5 +10,7 @@ func main() {
 	// deadlock.DeadLock()
 	// bufchan.ChanWithBuf()
 	// semaphore.GoSum()
-	semaphore.ProducerAndConSumer()
+	// semaphore.ProducerAndConSumer()
+	// primefilter.PrimeFilter()
+	primefilterfactory.PrimeFilterFactory()
 }
