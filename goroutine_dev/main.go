@@ -1,7 +1,7 @@
 package main
 
 import (
-	primefilterfactory "goroutine_dev/prime_filter_factory"
+	switchchan "goroutine_dev/switch_chan"
 )
 
 func main() {
@@ -12,5 +12,8 @@ func main() {
 	// semaphore.GoSum()
 	// semaphore.ProducerAndConSumer()
 	// primefilter.PrimeFilter()
-	primefilterfactory.PrimeFilterFactory()
+	// primefilterfactory.PrimeFilterFactory()
+	// switchchan.SwitchChan()
+	// switchchan.Fibonacci()
+	switchchan.Pi()
 }
