@@ -1,8 +1,9 @@
 package store
 
 import (
-	"encoding/gob"
-	"goto_v3/key"
+	"encoding/json"
+	"fmt"
+	"goto_v4/key"
 	"io"
 	"log"
 	"os"
@@ -20,6 +21,7 @@ type URLStore struct {
 	save chan record
 }
 
+// 这里的字段必须设置为大写，否则重启后会导致找不到
 type record struct {
 	Key, URL string
 }
@@ -37,7 +39,7 @@ func (s *URLStore) saveloop(filename string) {
 		log.Fatal("URLStore: ", err)
 	}
 	defer f.Close()
-	e := gob.NewEncoder(f)
+	e := json.NewEncoder(f)
 	for {
 		r := <-s.save
 		if err := e.Encode(&r); err != nil {
@@ -48,13 +50,12 @@ func (s *URLStore) saveloop(filename string) {
 
 // load 程序启动时，将磁盘上的数据读取到URLStore中
 func (s *URLStore) load(filename string) error {
-	// 寻址到文件的开头位置，读取并解码每一条记录
 	f, err := os.Open(filename)
 	if err != nil {
 		log.Println("Error opening URLStore: ", err)
 	}
 	defer f.Close()
-	d := gob.NewDecoder(f)
+	d := json.NewDecoder(f)
 	for err == nil {
 		var r record
 		if err = d.Decode(&r); err == nil {
@@ -77,6 +78,7 @@ func (s *URLStore) Get(key string) string {
 
 // Set 保存一个key-url
 func (s *URLStore) Set(key, url string) bool {
+	fmt.Println(key, url)
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	if _, present := s.urls[key]; present {

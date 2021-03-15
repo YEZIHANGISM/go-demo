@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"goto_v3/apis"
+	"goto_v4/apis"
 	"net/http"
 )
 
@@ -16,6 +16,8 @@ var (
 // v2: 将数据持久化到磁盘
 
 // v3: 利用并发，将保存和写入磁盘解耦，优化性能
+
+// v4: 用json持久化存储
 
 func main() {
 	flag.Parse()
